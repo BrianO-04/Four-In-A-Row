@@ -8,6 +8,7 @@ class Board {
         Board(char w, char h);
         ~Board();
         int put(char piece, char col);
+        bool check(char row, char col);
 };
 
 #endif // BOARD_H_

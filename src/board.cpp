@@ -14,3 +14,8 @@ Board::~Board(){
 int Board::put(char piece, char col){
     return 0;
 }
+
+// Check if a piece is part of a winning combination
+bool Board::check(char row, char col){
+    return 0;
+}
