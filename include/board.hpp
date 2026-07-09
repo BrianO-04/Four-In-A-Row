@@ -7,6 +7,7 @@ class Board {
     public:
         Board(char w, char h);
         ~Board();
+        int put(char piece, char col);
 };
 
 #endif // BOARD_H_
