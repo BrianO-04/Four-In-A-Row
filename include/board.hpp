@@ -9,6 +9,7 @@ class Board {
         ~Board();
         int put(char piece, char col);
         bool check(char row, char col);
+        void reset();
 };
 
 #endif // BOARD_H_

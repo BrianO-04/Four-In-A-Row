@@ -19,3 +19,8 @@ int Board::put(char piece, char col){
 bool Board::check(char row, char col){
     return 0;
 }
+
+// Reset board
+void Board::reset(){
+    
+}
