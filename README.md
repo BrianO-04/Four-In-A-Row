@@ -1,2 +1,2 @@
-# ConnectFour
-Connect Four game written in C++
+# Four In A Row
+Four In A Row game written in C++
