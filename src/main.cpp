@@ -1,6 +1,8 @@
 #include <iostream>
+#include "../include/board.hpp"
 
 int main(){
-    std::cout << "Four" << std::endl;
+    Board b = Board(4,4);
+    b.printBoard();
     return 0;
 }
