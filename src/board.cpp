@@ -54,11 +54,12 @@ void Board::reset(){
 
 void Board::printBoard(){
     for(int i = 0; i < w * h; i++){
-        if(i % w == 0){
+        if(i % w == 0 && i != 0){
             std::cout << std::endl;
         }
         std::cout << (int)positions[i];
     }
+    std::cout << std::endl << std::endl;
 }
 
 char Board::getPieceAt(int row, int col){
