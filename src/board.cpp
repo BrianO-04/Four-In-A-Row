@@ -6,14 +6,14 @@
 Board::Board(char w, char h){
     this->w = w;
     this->h = h;
-    positions = (char*)malloc(sizeof(char) * w * h);
+    positions = new char[w * h];
     for(int i = 0; i < w * h; i++){
         positions[i] = 0;
     }
 }
 
 Board::~Board(){
-    free(positions);
+    delete[] positions;
 }
 
 // Insert a piece in the lowest possible row of a column
