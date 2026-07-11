@@ -16,23 +16,24 @@ Board::~Board(){
 }
 
 // Insert a piece in the lowest possible row of a column
-// Returns 1 if a piece cannot be placed
+// Returns -1 if a piece cannot be placed
+// Returns final row if successful
 int Board::put(char piece, char col){
     if(col < 0 || col > w){
-        return 1;
+        return -1;
     }
 
     int row = h-1;
     char pieceAtPos = getPieceAt(row, col);
     while(pieceAtPos != 0){
         row -=1;
-        if(row < 0) return 1;
+        if(row < 0) return -1;
         pieceAtPos = getPieceAt(row, col);
     }
 
     int finalPos = (row * w) + col;
     positions[finalPos] = piece;
-    return 0;
+    return row;
 }
 
 // Check if a piece is part of a winning combination
@@ -172,11 +173,17 @@ void Board::reset(){
 }
 
 void Board::printBoard(){
+    for(int i = 0; i < w; i++){
+        std::cout << i;
+    }
+    std::cout << std::endl;
     for(int i = 0; i < w * h; i++){
         if(i % w == 0 && i != 0){
             std::cout << std::endl;
         }
-        std::cout << (int)positions[i];
+        if(positions[i] == 0) std::cout << '_';
+        else if(positions[i] == 1) std::cout << 'X';
+        if(positions[i] == 2) std::cout << 'O';
     }
     std::cout << std::endl << std::endl;
 }
