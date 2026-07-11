@@ -2,19 +2,29 @@
 #include <ostream>
 #include "../include/board.hpp"
 
+// Handles invalid inputs automatically
+int getNumberInput(){
+    int out;
+    while(!(std::cin >> out)){
+        std::cout << "Invalid input. Please enter a whole number: ";
+        std::cin.clear();
+        std::cin.ignore(255, '\n');
+    }
+    return out;
+}
+
 int main(){
-    int w, h;
     std::cout << "Input board width: ";
-    std::cin >> w;
+    int w = getNumberInput();
     std::cout << "Input board height: ";
-    std::cin >> h;
+    int h = getNumberInput();
 
     while(w < 4 && h < 4){
         std::cout << "Board must be at least four in one dimension!" << std::endl;
         std::cout << "Input board width: ";
-        std::cin >> w;
+        w = getNumberInput();
         std::cout << "Input board height: ";
-        std::cin >> h;
+        h = getNumberInput();
     }
 
     Board b = Board(w,h);
@@ -24,14 +34,13 @@ int main(){
     while(1){
         // Player 1 input
         std::cout << "Player 1, input column: ";
-        int col;
-        std::cin >> col;
+        int col = getNumberInput();
 
         int row = b.put(1, col);
         while(row == -1){ // Invalid input loop
             b.printBoard();
             std::cout << "Invalid input!" << std::endl << "Player 1, input column: ";
-            std::cin >> col;
+            col = getNumberInput();
             row = b.put(1, col);
         }
         b.printBoard();
@@ -43,13 +52,13 @@ int main(){
 
         // Player 2 input
         std::cout << "Player 2, input column: ";
-        std::cin >> col;
+        col = getNumberInput();
 
         row = b.put(2, col);
         while(row == -1){ // Invalid input loop
             b.printBoard();
             std::cout << "Invalid input!" << std::endl << "Player 2, input column: ";
-            std::cin >> col;
+            col = getNumberInput();
             row = b.put(2, col);
         }
         b.printBoard();
