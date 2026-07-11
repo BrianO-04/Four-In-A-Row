@@ -1,5 +1,4 @@
 #include "../include/board.hpp"
-#include <cstdlib>
 #include <iostream>
 
 // Create a new board of size w x h
