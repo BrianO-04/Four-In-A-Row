@@ -3,7 +3,21 @@
 #include "../include/board.hpp"
 
 int main(){
-    Board b = Board(6,6);
+    int w, h;
+    std::cout << "Input board width: ";
+    std::cin >> w;
+    std::cout << "Input board height: ";
+    std::cin >> h;
+
+    while(w < 4 && h < 4){
+        std::cout << "Board must be at least four in one dimension!" << std::endl;
+        std::cout << "Input board width: ";
+        std::cin >> w;
+        std::cout << "Input board height: ";
+        std::cin >> h;
+    }
+
+    Board b = Board(w,h);
 
     b.printBoard();
 
