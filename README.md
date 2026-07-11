@@ -12,6 +12,6 @@ CMake must be installed
 	$ mkdir build
 	$ cmake .S . -B build
 	$ cmake --build build
-## How to run client
+## How to run
     $ cd build
 	$ ./FourInARow
