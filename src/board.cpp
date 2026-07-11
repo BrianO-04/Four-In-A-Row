@@ -19,7 +19,7 @@ Board::~Board(){
 // Returns -1 if a piece cannot be placed
 // Returns final row if successful
 int Board::put(char piece, char col){
-    if(col < 0 || col > w){
+    if(col < 0 || col >= w){
         return -1;
     }
 
