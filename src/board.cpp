@@ -37,10 +37,73 @@ int Board::put(char piece, char col){
 }
 
 // Check if a piece is part of a winning combination
+// Returns 1 upon win
 bool Board::check(char row, char col){
     if(row < 0 || row > h || col < 0 || col > w){
         return 1;
     }
+    char piece = getPieceAt(row, col);
+    if(piece == 0) return 0;
+
+    // Vertical check
+    {
+        int total = 1;
+        // Down
+        if(row <= 2){
+            int curr = row+1;
+            while(row < h){
+                char tmp = getPieceAt(curr, col);
+                if(tmp == piece) total++;
+                else break;
+                row += 1;
+            }
+        }
+        // Up
+        if(row > 0){
+            int curr = row-1;
+            while(row < h){
+                char tmp = getPieceAt(curr, col);
+                if(tmp == piece) total++;
+                else break;
+                row -= 1;
+            }
+        }
+        if(total >= 4) return 1;
+    }
+    
+
+    // Horizontal check
+    {
+        int total = 1;
+        // Left check
+        if(col > 0){
+            int curr = col-1;
+            while(curr >= 0){
+                char tmp = getPieceAt(row, curr);
+                if(tmp == piece) total++;
+                else break;
+                curr -= 1;
+            }
+            if(total >= 4) return 1;
+        }
+        // Right check
+        if(col < w){
+            int curr = col+1;
+            while(curr < w){
+                char tmp = getPieceAt(row, curr);
+                if(tmp == piece) total++;
+                else break;
+                curr += 1;
+            }
+            if(total >= 4) return 1;
+        }
+    }
+
+    // Diagonal Up-Left/Down-Right Check
+    // TODO
+
+    // Diagonal Up-Right/Down-Left Check
+    // TODO
 
     return 0;
 }
