@@ -51,24 +51,25 @@ bool Board::check(char row, char col){
         // Down
         if(row <= 2){
             int curr = row+1;
-            while(row < h){
+            while(curr < h){
                 char tmp = getPieceAt(curr, col);
                 if(tmp == piece) total++;
                 else break;
-                row += 1;
+                curr += 1;
             }
+            if(total >= 4) return 1;
         }
         // Up
         if(row > 0){
             int curr = row-1;
-            while(row < h){
+            while(curr < h){
                 char tmp = getPieceAt(curr, col);
                 if(tmp == piece) total++;
                 else break;
-                row -= 1;
+                curr -= 1;
             }
+            if(total >= 4) return 1;
         }
-        if(total >= 4) return 1;
     }
     
 
@@ -100,10 +101,66 @@ bool Board::check(char row, char col){
     }
 
     // Diagonal Up-Left/Down-Right Check
-    // TODO
+    {
+        int total = 1;
+        // Up-Left
+        if(col > 0 && row > 0){
+            int currCol = col-1;
+            int currRow = row-1;
+            while(currCol >= 0 && currRow >= 0){
+                char tmp = getPieceAt(currRow, currCol);
+                if(tmp == piece) total++;
+                else break;
+                currCol -= 1;
+                currRow -= 1;
+            }
+            if(total >= 4) return 1;
+        }
+        // Down-Right
+        if(col < w && row < h){
+            int currCol = col+1;
+            int currRow = row+1;
+            while(currCol < w && currRow < h){
+                char tmp = getPieceAt(currRow, currCol);
+                if(tmp == piece) total++;
+                else break;
+                currCol += 1;
+                currRow += 1;
+            }
+            if(total >= 4) return 1;
+        }
+    }
 
     // Diagonal Up-Right/Down-Left Check
-    // TODO
+    {
+        int total = 1;
+        // Up-Right
+        if(col < w && row > 0){
+            int currCol = col+1;
+            int currRow = row-1;
+            while(currCol <w && currRow >= 0){
+                char tmp = getPieceAt(currRow, currCol);
+                if(tmp == piece) total++;
+                else break;
+                currCol += 1;
+                currRow -= 1;
+            }
+            if(total >= 4) return 1;
+        }
+        // Down-Left
+        if(col < w && row < h){
+            int currCol = col-1;
+            int currRow = row+1;
+            while(currCol >= 0 && currRow < h){
+                char tmp = getPieceAt(currRow, currCol);
+                if(tmp == piece) total++;
+                else break;
+                currCol -= 1;
+                currRow += 1;
+            }
+            if(total >= 4) return 1;
+        }
+    }
 
     return 0;
 }
