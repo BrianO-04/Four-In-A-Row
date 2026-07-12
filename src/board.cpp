@@ -201,3 +201,12 @@ char Board::getPieceAt(int row, int col){
 int Board::getWidth(){
     return w;
 }
+
+bool Board::full(){
+    for(int i = 0; i < w; i++){
+        if(getPieceAt(0, i) == 0){
+            return false;
+        }
+    }
+    return true;
+}

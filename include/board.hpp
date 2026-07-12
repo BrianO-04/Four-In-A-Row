@@ -14,6 +14,7 @@ class Board {
         void reset();
         void printBoard();
         int getWidth();
+        bool full();
 };
 
 #endif // BOARD_H_

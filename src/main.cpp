@@ -37,6 +37,12 @@ int main(){
             std::cout << "Player 2 win!" << std::endl;
             break;
         }
+
+        if(b->full()){
+            b->printBoard();
+            std::cout << "Draw!" << std::endl;
+            break;
+        }
     }
 
     delete b;
