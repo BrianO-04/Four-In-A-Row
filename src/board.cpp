@@ -182,8 +182,9 @@ void Board::printBoard(){
             std::cout << std::endl;
         }
         if(positions[i] == 0) std::cout << '_';
-        else if(positions[i] == 1) std::cout << '1';
-        if(positions[i] == 2) std::cout << '2';
+        else{
+            std::cout << positions[i];
+        }
     }
     std::cout << std::endl << std::endl;
 }
