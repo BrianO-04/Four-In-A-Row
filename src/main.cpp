@@ -20,8 +20,30 @@ int main(){
 
     Board* b = new Board(w,h);
 
-    Controller* p1 = new RandomComp(b, '1', 1);
-    Controller* p2 = new RandomComp(b, '2', 2);
+    Controller* p1;
+    Controller* p2;
+
+    std::cout << "Select player 1 type" << std::endl;
+    std::cout << "1) Player controlled (Default)" << std::endl;
+    std::cout << "2) Random columns" << std::endl;
+    std::cout << "Input: ";
+    int p1Choice = getNumberInput();
+    if(p1Choice == 2){
+        p1 = new RandomComp(b, '1', 1);
+    }else{
+        p1 = new Player(b, '1', 1);
+    }
+
+    std::cout << "Select player 2 type" << std::endl;
+    std::cout << "1) Player controlled (Default)" << std::endl;
+    std::cout << "2) Random columns" << std::endl;
+    std::cout << "Input: ";
+    int p2Choice = getNumberInput();
+    if(p2Choice == 2){
+        p2 = new RandomComp(b, '2', 2);
+    }else{
+        p2 = new Player(b, '2', 2);
+    }
 
     while(1){
         // Player 1 input
