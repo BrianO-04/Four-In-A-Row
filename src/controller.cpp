@@ -4,8 +4,10 @@
 #include <iostream>
 #include <string>
 
-Controller::Controller(Board* b){
+Controller::Controller(Board* b, char p, int n){
     board = b;
+    piece = p;
+    number = n;
 }
 
 bool Player::Move(){
@@ -22,9 +24,4 @@ bool Player::Move(){
     }
 
     return board->check(row, col);
-}
-
-Player::Player(Board* b, char p, int n) : Controller(b){
-    piece = p;
-    number = n;
 }

@@ -6,18 +6,21 @@
 class Controller{
     protected:
         Board* board;
+        char piece;
+        int number;
     public:
-        Controller(Board* b);
+        Controller(Board* b, char p, int n);
         virtual bool Move() = 0; // Returns true on winning move
 };
 
 class Player : public Controller{
-    private:
-        char piece;
-        int number;
     public:
-        Player(Board* b, char p, int n);
+        using Controller::Controller;
         bool Move();
+};
+
+class RandomComp : public Controller{
+
 };
 
 #endif //CON_H_
