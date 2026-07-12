@@ -5,6 +5,8 @@ include_directories(include)
 include_directories(src)
 
 add_executable(FourInARow 
+    src/controller.cpp
+    src/input.cpp
     src/board.cpp
     src/main.cpp)
 

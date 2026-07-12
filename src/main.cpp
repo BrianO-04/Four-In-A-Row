@@ -1,17 +1,8 @@
 #include <iostream>
 #include <ostream>
 #include "../include/board.hpp"
-
-// Handles invalid inputs automatically
-int getNumberInput(){
-    int out;
-    while(!(std::cin >> out)){
-        std::cout << "Invalid input. Please enter a whole number: ";
-        std::cin.clear();
-        std::cin.ignore(255, '\n');
-    }
-    return out;
-}
+#include "../include/input.hpp"
+#include "../include/controller.hpp"
 
 int main(){
     std::cout << "Input board width: ";
@@ -27,47 +18,28 @@ int main(){
         h = getNumberInput();
     }
 
-    Board b = Board(w,h);
+    Board* b = new Board(w,h);
 
-    b.printBoard();
+    Player p1 = Player(b, 1, 1);
+    Player p2 = Player(b, 2, 2);
 
     while(1){
         // Player 1 input
-        std::cout << "Player 1, input column: ";
-        int col = getNumberInput();
-
-        int row = b.put(1, col);
-        while(row == -1){ // Invalid input loop
-            b.printBoard();
-            std::cout << "Invalid input!" << std::endl << "Player 1, input column: ";
-            col = getNumberInput();
-            row = b.put(1, col);
-        }
-        b.printBoard();
-        // Player 1 win check
-        if(b.check(row, col)){
+        if(p1.Move()){
+            b->printBoard();
             std::cout << "Player 1 win!" << std::endl;
             break;
         }
 
         // Player 2 input
-        std::cout << "Player 2, input column: ";
-        col = getNumberInput();
-
-        row = b.put(2, col);
-        while(row == -1){ // Invalid input loop
-            b.printBoard();
-            std::cout << "Invalid input!" << std::endl << "Player 2, input column: ";
-            col = getNumberInput();
-            row = b.put(2, col);
-        }
-        b.printBoard();
-        // Player 2 win check
-        if(b.check(row, col)){
+        if(p2.Move()){
+            b->printBoard();
             std::cout << "Player 2 win!" << std::endl;
             break;
         }
     }
+
+    delete b;
 
     return 0;
 }

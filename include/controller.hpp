@@ -3,12 +3,21 @@
 
 #include "board.hpp"
 
-class Opponent{
-    private:
+class Controller{
+    protected:
         Board* board;
     public:
-        Opponent(Board* b);
-        int CalculateMove();
+        Controller(Board* b);
+        virtual bool Move() = 0; // Returns true on winning move
+};
+
+class Player : public Controller{
+    private:
+        char piece;
+        int number;
+    public:
+        Player(Board* b, char p, int n);
+        bool Move();
 };
 
 #endif //CON_H_
