@@ -20,19 +20,19 @@ int main(){
 
     Board* b = new Board(w,h);
 
-    Player p1 = Player(b, 1, 1);
-    Player p2 = Player(b, 2, 2);
+    Controller* p1 = new RandomComp(b, '1', 1);
+    Controller* p2 = new RandomComp(b, '2', 2);
 
     while(1){
         // Player 1 input
-        if(p1.Move()){
+        if(p1->Move()){
             b->printBoard();
             std::cout << "Player 1 win!" << std::endl;
             break;
         }
 
         // Player 2 input
-        if(p2.Move()){
+        if(p2->Move()){
             b->printBoard();
             std::cout << "Player 2 win!" << std::endl;
             break;
@@ -40,6 +40,8 @@ int main(){
     }
 
     delete b;
+    delete p1;
+    delete p2;
 
     return 0;
 }

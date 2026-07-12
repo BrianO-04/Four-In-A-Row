@@ -2,6 +2,7 @@
 #define CON_H_
 
 #include "board.hpp"
+#include <random>
 
 class Controller{
     protected:
@@ -9,6 +10,7 @@ class Controller{
         char piece;
         int number;
     public:
+        virtual ~Controller() = default;
         Controller(Board* b, char p, int n);
         virtual bool Move() = 0; // Returns true on winning move
 };
@@ -20,7 +22,12 @@ class Player : public Controller{
 };
 
 class RandomComp : public Controller{
-
+    private:
+        std::mt19937 gen;
+        std::uniform_int_distribution<int> distrib;
+    public:
+        RandomComp(Board* b, char p, int n);
+        bool Move();
 };
 
 #endif //CON_H_
