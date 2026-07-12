@@ -1,5 +1,5 @@
-#ifndef OPP_H_
-#define OPP_H_
+#ifndef CON_H_
+#define CON_H_
 
 #include "board.hpp"
 
@@ -11,4 +11,4 @@ class Opponent{
         int CalculateMove();
 };
 
-#endif //OPP_H_
+#endif //CON_H_
