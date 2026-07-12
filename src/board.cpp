@@ -2,9 +2,9 @@
 #include <iostream>
 
 // Create a new board of size w x h
-Board::Board(char w, char h){
-    this->w = w;
-    this->h = h;
+Board::Board(int wid, int hei){
+    w = wid;
+    h = hei;
     positions = new char[w * h];
     for(int i = 0; i < w * h; i++){
         positions[i] = 0;
@@ -182,8 +182,8 @@ void Board::printBoard(){
             std::cout << std::endl;
         }
         if(positions[i] == 0) std::cout << '_';
-        else if(positions[i] == 1) std::cout << 'X';
-        if(positions[i] == 2) std::cout << 'O';
+        else if(positions[i] == 1) std::cout << '1';
+        if(positions[i] == 2) std::cout << '2';
     }
     std::cout << std::endl << std::endl;
 }
@@ -195,4 +195,8 @@ char Board::getPieceAt(int row, int col){
 
     int index = (row * w) + col;
     return positions[index];
+}
+
+int Board::getWidth(){
+    return w;
 }
