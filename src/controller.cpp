@@ -33,17 +33,13 @@ RandomComp::RandomComp(Board* b, char p, int n) : Controller(b, p, n){
 }
 
 bool RandomComp::Move(){
-    board->printBoard();
     int col = distrib(gen);
-    std::cout << "Player " << number << ", input column: " << std::to_string(col) << std::endl;
-
+    
     int row = board->put(piece, col);
     while(row == -1){ // Invalid input loop
-        board->printBoard();
         col = distrib(gen);
-        std::cout << "Invalid input!" << std::endl << "Player " << number << ", input column: " << std::to_string(col) << std::endl;;
         row = board->put(piece, col);
     }
-
+    std::cout << "Player " << number << ", input column: " << std::to_string(col) << std::endl;
     return board->check(row, col);
 }
