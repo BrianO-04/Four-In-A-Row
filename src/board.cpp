@@ -40,7 +40,7 @@ int Board::put(char piece, char col){
 // Returns 1 upon win
 bool Board::check(char row, char col){
     if(row < 0 || row > h || col < 0 || col > w){
-        return 1;
+        return 0;
     }
     char piece = getPieceAt(row, col);
     if(piece == 0) return 0;
@@ -49,9 +49,9 @@ bool Board::check(char row, char col){
     {
         int total = 1;
         // Down
-        if(row <= 2){
+        if(row < h){
             int curr = row+1;
-            while(curr < h){
+            while(curr <= h){
                 char tmp = getPieceAt(curr, col);
                 if(tmp == piece) total++;
                 else break;
@@ -62,7 +62,7 @@ bool Board::check(char row, char col){
         // Up
         if(row > 0){
             int curr = row-1;
-            while(curr < h){
+            while(curr > 0){
                 char tmp = getPieceAt(curr, col);
                 if(tmp == piece) total++;
                 else break;
@@ -168,18 +168,26 @@ bool Board::check(char row, char col){
 // Check if a spot wins with a certain piece
 bool Board::check(char row, char col, char check){
     if(row < 0 || row > h || col < 0 || col > w){
-        return 1;
+        return 0;
     }
     char piece = check;
     if(piece == 0) return 0;
+
+    row = h-1;
+    char pieceAtPos = getPieceAt(row, col);
+    while(pieceAtPos != 0){
+        row -=1;
+        if(row < 0) return -1;
+        pieceAtPos = getPieceAt(row, col);
+    }
 
     // Vertical check
     {
         int total = 1;
         // Down
-        if(row <= 2){
+        if(row < h){
             int curr = row+1;
-            while(curr < h){
+            while(curr <= h){
                 char tmp = getPieceAt(curr, col);
                 if(tmp == piece) total++;
                 else break;
@@ -190,7 +198,7 @@ bool Board::check(char row, char col, char check){
         // Up
         if(row > 0){
             int curr = row-1;
-            while(curr < h){
+            while(curr > 0){
                 char tmp = getPieceAt(curr, col);
                 if(tmp == piece) total++;
                 else break;
@@ -337,4 +345,42 @@ bool Board::full(){
         }
     }
     return true;
+}
+
+int Board::spotRating(int col, char check){
+    if(getPieceAt(0, col) != 0){ // Check if the row is full
+        return 0;
+    }
+
+    int rating = 0;
+    int row = h-1;
+    char pieceAtPos = getPieceAt(row, col);
+    while(pieceAtPos != 0){
+        row -=1;
+        if(row < 0) return -1;
+        pieceAtPos = getPieceAt(row, col);
+    }
+
+    // Left
+    if(col-1 > 0 && getPieceAt(row, col-1) == check){
+        rating++;
+    }
+    // Right
+    if(col+1 < w && getPieceAt(row, col+1) == check){
+        rating++;
+    }
+    // Up-Left
+    if(col-1 > 0 && row-1 > 0 && getPieceAt(row-1, col-1) == check){
+        rating++;
+    }
+    // Up-Right
+    if(col+1 < w && row+1 < h && getPieceAt(row+1, col+1) == check){
+        rating++;
+    }
+    // Below
+    if(row+1 < h && getPieceAt(row+1, col) == check){
+        rating++;
+    }
+
+    return rating;
 }

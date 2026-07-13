@@ -16,6 +16,7 @@ class Board {
         void printBoard();
         int getWidth();
         bool full();
+        int spotRating(int col, char check);
 };
 
 #endif // BOARD_H_
