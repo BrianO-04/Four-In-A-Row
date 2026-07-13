@@ -30,4 +30,13 @@ class RandomComp : public Controller{
         bool Move();
 };
 
+class SimpleComp : public Controller{
+    private:
+        std::mt19937 gen;
+        std::uniform_int_distribution<int> distrib;
+    public:
+        SimpleComp(Board* b, char p, int n);
+        bool Move();
+};
+
 #endif //CON_H_

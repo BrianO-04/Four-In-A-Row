@@ -1,6 +1,7 @@
 #include "../include/controller.hpp"
 #include "../include/input.hpp"
 #include "board.hpp"
+#include <asm-generic/errno.h>
 #include <iostream>
 #include <string>
 
@@ -42,4 +43,66 @@ bool RandomComp::Move(){
     }
     std::cout << "Player " << number << ", input column: " << std::to_string(col) << std::endl;
     return board->check(row, col);
+}
+
+SimpleComp::SimpleComp(Board* b, char p, int n) : Controller(b, p, n){
+    std::random_device rd;
+    gen = std::mt19937(rd());
+    distrib = std::uniform_int_distribution<int>(0, b->getWidth()-1);
+}
+
+bool SimpleComp::Move(){
+
+    // Check for winning spots
+    for(int i = 0; i < board->getWidth(); i ++){
+        if(board->check(0, i, piece)){
+            int row = board->put(piece, i);
+            std::cout << "Player " << number << ", input column: " << std::to_string(i) << std::endl;
+            return board->check(row, i);
+        }
+    }
+
+    // Check if opponent can win
+    char check = (piece == '1') ? '2' : '1';
+    for(int i = 0; i < board->getWidth(); i ++){
+        if(board->check(0, i, check)){
+            int row = board->put(piece, i);
+            std::cout << "Player " << number << ", input column: " << std::to_string(i) << std::endl;
+            return board->check(row, i);
+        }
+    }
+
+    // Get spot ratings
+    int* cols = new int[board->getWidth()];
+    for(int i = 0; i < board->getWidth(); i ++){
+        cols[i] = board->spotRating(i, piece);
+    }
+
+    // Choose highest rating
+    int maxRating = -1;
+    int maxIndex = -1;
+    for(int i = 0; i < board->getWidth(); i++){
+        if(cols[i] > maxRating){
+            maxRating = cols[i];
+            maxIndex = i;
+        }
+    }
+
+    delete[] cols;
+
+    if(maxRating > 0){
+        int row = board->put(piece, maxIndex);
+        std::cout << "Player " << number << ", input column: " << std::to_string(maxIndex) << std::endl;
+        return board->check(row, maxIndex);
+    }else{ // Random if there are no spots next to existing pieces
+        int col = distrib(gen);
+        
+        int row = board->put(piece, col);
+        while(row == -1){ // Invalid input loop
+            col = distrib(gen);
+            row = board->put(piece, col);
+        }
+        std::cout << "Player " << number << ", input column: " << std::to_string(col) << std::endl;
+        return board->check(row, col);
+    }
 }
