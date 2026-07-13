@@ -165,6 +165,134 @@ bool Board::check(char row, char col){
     return 0;
 }
 
+// Check if a spot wins with a certain piece
+bool Board::check(char row, char col, char check){
+    if(row < 0 || row > h || col < 0 || col > w){
+        return 1;
+    }
+    char piece = check;
+    if(piece == 0) return 0;
+
+    // Vertical check
+    {
+        int total = 1;
+        // Down
+        if(row <= 2){
+            int curr = row+1;
+            while(curr < h){
+                char tmp = getPieceAt(curr, col);
+                if(tmp == piece) total++;
+                else break;
+                curr += 1;
+            }
+            if(total >= 4) return 1;
+        }
+        // Up
+        if(row > 0){
+            int curr = row-1;
+            while(curr < h){
+                char tmp = getPieceAt(curr, col);
+                if(tmp == piece) total++;
+                else break;
+                curr -= 1;
+            }
+            if(total >= 4) return 1;
+        }
+    }
+    
+
+    // Horizontal check
+    {
+        int total = 1;
+        // Left check
+        if(col > 0){
+            int curr = col-1;
+            while(curr >= 0){
+                char tmp = getPieceAt(row, curr);
+                if(tmp == piece) total++;
+                else break;
+                curr -= 1;
+            }
+            if(total >= 4) return 1;
+        }
+        // Right check
+        if(col < w){
+            int curr = col+1;
+            while(curr < w){
+                char tmp = getPieceAt(row, curr);
+                if(tmp == piece) total++;
+                else break;
+                curr += 1;
+            }
+            if(total >= 4) return 1;
+        }
+    }
+
+    // Diagonal Up-Left/Down-Right Check
+    {
+        int total = 1;
+        // Up-Left
+        if(col > 0 && row > 0){
+            int currCol = col-1;
+            int currRow = row-1;
+            while(currCol >= 0 && currRow >= 0){
+                char tmp = getPieceAt(currRow, currCol);
+                if(tmp == piece) total++;
+                else break;
+                currCol -= 1;
+                currRow -= 1;
+            }
+            if(total >= 4) return 1;
+        }
+        // Down-Right
+        if(col < w && row < h){
+            int currCol = col+1;
+            int currRow = row+1;
+            while(currCol < w && currRow < h){
+                char tmp = getPieceAt(currRow, currCol);
+                if(tmp == piece) total++;
+                else break;
+                currCol += 1;
+                currRow += 1;
+            }
+            if(total >= 4) return 1;
+        }
+    }
+
+    // Diagonal Up-Right/Down-Left Check
+    {
+        int total = 1;
+        // Up-Right
+        if(col < w && row > 0){
+            int currCol = col+1;
+            int currRow = row-1;
+            while(currCol <w && currRow >= 0){
+                char tmp = getPieceAt(currRow, currCol);
+                if(tmp == piece) total++;
+                else break;
+                currCol += 1;
+                currRow -= 1;
+            }
+            if(total >= 4) return 1;
+        }
+        // Down-Left
+        if(col < w && row < h){
+            int currCol = col-1;
+            int currRow = row+1;
+            while(currCol >= 0 && currRow < h){
+                char tmp = getPieceAt(currRow, currCol);
+                if(tmp == piece) total++;
+                else break;
+                currCol -= 1;
+                currRow += 1;
+            }
+            if(total >= 4) return 1;
+        }
+    }
+
+    return 0;
+}
+
 // Reset board
 void Board::reset(){
     for(int i = 0; i < w * h; i++){

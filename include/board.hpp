@@ -11,6 +11,7 @@ class Board {
         ~Board();
         int put(char piece, char col);
         bool check(char row, char col);
+        bool check(char row, char col, char check);
         void reset();
         void printBoard();
         int getWidth();
