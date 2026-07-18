@@ -49,13 +49,13 @@ int main(){
         if(p1->Move(game)){
             b->printBoard();
             std::cout << "Player 1 win!" << std::endl;
-            game->saveData();
             break;
         }
 
         // Player 2 input
         if(p2->Move(game)){
             b->printBoard();
+            game->saveData();
             std::cout << "Player 2 win!" << std::endl;
             break;
         }
