@@ -5,7 +5,7 @@
 #include <fstream>
 
 int Data::saveData(){
-    auto now = std::chrono::system_clock::now();
+    auto now = std::chrono::floor<std::chrono::seconds>(std::chrono::system_clock::now());
     std::string fileName = std::format("data/{:%H-%M-%S}.bin", now);
 
     std::ofstream outFile(fileName, std::ios::out | std::ios::binary);
