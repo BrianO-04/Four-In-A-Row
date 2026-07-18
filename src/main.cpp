@@ -11,13 +11,13 @@ int main(){
     Controller* p1;
     Controller* p2;
 
-    std::cout << "Select player 1 type" << std::endl;
-    std::cout << "1) Player controlled (Default)" << std::endl;
-    std::cout << "2) Random columns" << std::endl;
-    std::cout << "3) Simple AI" << std::endl;
-    std::cout << "Input: ";
+    // std::cout << "Select player 1 type" << std::endl;
+    // std::cout << "1) Player controlled (Default)" << std::endl;
+    // std::cout << "2) Random columns" << std::endl;
+    // std::cout << "3) Simple AI" << std::endl;
+    // std::cout << "Input: ";
     //int p1Choice = getNumberInput();
-    int p1Choice = 3;
+    int p1Choice = 1;
     if(p1Choice == 2){
         p1 = new RandomComp(b, '1', 1);
     }else if(p1Choice == 3){
@@ -27,13 +27,13 @@ int main(){
         p1 = new Player(b, '1', 1);
     }
 
-    std::cout << "Select player 2 type" << std::endl;
-    std::cout << "1) Player controlled (Default)" << std::endl;
-    std::cout << "2) Random columns" << std::endl;
-    std::cout << "3) Simple AI" << std::endl;
-    std::cout << "Input: ";
+    // std::cout << "Select player 2 type" << std::endl;
+    // std::cout << "1) Player controlled (Default)" << std::endl;
+    // std::cout << "2) Random columns" << std::endl;
+    // std::cout << "3) Simple AI" << std::endl;
+    // std::cout << "Input: ";
     // int p2Choice = getNumberInput();
-    int p2Choice = 1;
+    int p2Choice = 3;
     if(p2Choice == 2){
         p2 = new RandomComp(b, '2', 2);
     }else if(p2Choice == 3){
@@ -48,6 +48,7 @@ int main(){
         // Player 1 input
         if(p1->Move(game)){
             b->printBoard();
+            game->saveData();
             std::cout << "Player 1 win!" << std::endl;
             break;
         }
@@ -55,7 +56,6 @@ int main(){
         // Player 2 input
         if(p2->Move(game)){
             b->printBoard();
-            game->saveData();
             std::cout << "Player 2 win!" << std::endl;
             break;
         }
