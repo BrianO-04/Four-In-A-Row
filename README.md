@@ -1,6 +1,8 @@
 # Four In A Row
 Four In A Row game written in C++
 
+The purpose of this branch is data collection.
+
 ## Prerequisites for compilation
 
 CMake must be installed
