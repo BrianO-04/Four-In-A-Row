@@ -8,7 +8,7 @@
 int main(){
     Board* b = new Board(7,6);
 
-    Controller* p1 = new Player(b, '2', 2);
+    Controller* p1 = new Player(b, '1', 1);
     Controller* p2;
 
     std::cout << "Select player 2 type" << std::endl;
@@ -19,12 +19,12 @@ int main(){
     std::cout << "Input: ";
     int pChoice = getNumberInput();
     if(pChoice == 2){
-        p2 = new RandomComp(b, '1', 1);
+        p2 = new RandomComp(b, '2', 2);
     }else if(pChoice == 3){
-        p2 = new SimpleComp(b, '1', 1);
+        p2 = new SimpleComp(b, '2', 2);
     }
     else{
-        p2 = new Player(b, '1', 1);
+        p2 = new Player(b, '2', 2);
     }
 
     Data* game = new Data();
@@ -41,6 +41,7 @@ int main(){
         // Player 2 input
         if(p2->Move(game)){
             b->printBoard();
+            if(dynamic_cast<Player*>(p2)) game->saveData();
             std::cout << "Player 2 win!" << std::endl;
             break;
         }
