@@ -11,7 +11,7 @@ Controller::Controller(Board* b, char p, int n){
     number = n;
 }
 
-bool Player::Move(){
+bool Player::Move(Data* data){
     board->printBoard();
     std::cout << "Player " + std::to_string(number) + ", input column: ";
     int col = getNumberInput();
@@ -24,6 +24,7 @@ bool Player::Move(){
         row = board->put(piece, col);
     }
 
+    data->addMove(col);
     return board->check(row, col);
 }
 
@@ -33,7 +34,7 @@ RandomComp::RandomComp(Board* b, char p, int n) : Controller(b, p, n){
     distrib = std::uniform_int_distribution<int>(0, b->getWidth()-1);
 }
 
-bool RandomComp::Move(){
+bool RandomComp::Move(Data* data){
     int col = distrib(gen);
     
     int row = board->put(piece, col);
@@ -42,6 +43,8 @@ bool RandomComp::Move(){
         row = board->put(piece, col);
     }
     std::cout << "Player " << number << ", input column: " << std::to_string(col) << std::endl;
+
+    data->addMove(col);
     return board->check(row, col);
 }
 
@@ -51,13 +54,14 @@ SimpleComp::SimpleComp(Board* b, char p, int n) : Controller(b, p, n){
     distrib = std::uniform_int_distribution<int>(0, b->getWidth()-1);
 }
 
-bool SimpleComp::Move(){
+bool SimpleComp::Move(Data* data){
 
     // Check for winning spots
     for(int i = 0; i < board->getWidth(); i ++){
         if(board->check(0, i, piece)){
             int row = board->put(piece, i);
             std::cout << "Player " << number << ", input column: " << std::to_string(i) << std::endl;
+            data->addMove(i);
             return board->check(row, i);
         }
     }
@@ -68,6 +72,7 @@ bool SimpleComp::Move(){
         if(board->check(0, i, check)){
             int row = board->put(piece, i);
             std::cout << "Player " << number << ", input column: " << std::to_string(i) << std::endl;
+            data->addMove(i);
             return board->check(row, i);
         }
     }
@@ -93,6 +98,7 @@ bool SimpleComp::Move(){
     if(maxRating > 0){
         int row = board->put(piece, maxIndex);
         std::cout << "Player " << number << ", input column: " << std::to_string(maxIndex) << std::endl;
+        data->addMove(maxIndex);
         return board->check(row, maxIndex);
     }else{ // Random if there are no spots next to existing pieces
         int col = distrib(gen);
@@ -103,6 +109,7 @@ bool SimpleComp::Move(){
             row = board->put(piece, col);
         }
         std::cout << "Player " << number << ", input column: " << std::to_string(col) << std::endl;
+        data->addMove(col);
         return board->check(row, col);
     }
 }

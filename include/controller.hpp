@@ -3,6 +3,7 @@
 
 #include "board.hpp"
 #include <random>
+#include "gamedata.hpp"
 
 class Controller{
     protected:
@@ -12,13 +13,13 @@ class Controller{
     public:
         virtual ~Controller() = default;
         Controller(Board* b, char p, int n);
-        virtual bool Move() = 0; // Returns true on winning move
+        virtual bool Move(Data* data) = 0; // Returns true on winning move
 };
 
 class Player : public Controller{
     public:
         using Controller::Controller;
-        bool Move();
+        bool Move(Data* data);
 };
 
 class RandomComp : public Controller{
@@ -27,7 +28,7 @@ class RandomComp : public Controller{
         std::uniform_int_distribution<int> distrib;
     public:
         RandomComp(Board* b, char p, int n);
-        bool Move();
+        bool Move(Data* data);
 };
 
 class SimpleComp : public Controller{
@@ -36,7 +37,7 @@ class SimpleComp : public Controller{
         std::uniform_int_distribution<int> distrib;
     public:
         SimpleComp(Board* b, char p, int n);
-        bool Move();
+        bool Move(Data* data);
 };
 
 #endif //CON_H_

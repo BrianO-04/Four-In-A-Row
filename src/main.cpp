@@ -3,6 +3,7 @@
 #include "../include/board.hpp"
 #include "../include/input.hpp"
 #include "../include/controller.hpp"
+#include "gamedata.hpp"
 
 int main(){
     Board* b = new Board(7,6);
@@ -41,16 +42,19 @@ int main(){
         p2 = new Player(b, '2', 2);
     }
 
+    Data* game = new Data();
+
     while(1){
         // Player 1 input
-        if(p1->Move()){
+        if(p1->Move(game)){
             b->printBoard();
             std::cout << "Player 1 win!" << std::endl;
+            game->saveData();
             break;
         }
 
         // Player 2 input
-        if(p2->Move()){
+        if(p2->Move(game)){
             b->printBoard();
             std::cout << "Player 2 win!" << std::endl;
             break;
@@ -66,6 +70,7 @@ int main(){
     delete b;
     delete p1;
     delete p2;
+    delete game;
 
     return 0;
 }
