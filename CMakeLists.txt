@@ -12,3 +12,6 @@ add_executable(FourInARow
     src/board.cpp
     src/main.cpp)
 
+add_executable(dataTester
+    src/gamedata.cpp
+    src/dataTester.cpp)
