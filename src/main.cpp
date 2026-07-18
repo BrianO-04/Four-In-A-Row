@@ -11,13 +11,13 @@ int main(){
     Controller* p1;
     Controller* p2;
 
-    // std::cout << "Select player 1 type" << std::endl;
-    // std::cout << "1) Player controlled (Default)" << std::endl;
-    // std::cout << "2) Random columns" << std::endl;
-    // std::cout << "3) Simple AI" << std::endl;
-    // std::cout << "Input: ";
-    //int p1Choice = getNumberInput();
-    int p1Choice = 1;
+    std::cout << "Select player 1 type" << std::endl;
+    std::cout << "(Player 2 is always player controlled)" << std::endl;
+    std::cout << "1) Player controlled (Default)" << std::endl;
+    std::cout << "2) Random columns" << std::endl;
+    std::cout << "3) Simple AI (Recommended)" << std::endl;
+    std::cout << "Input: ";
+    int p1Choice = getNumberInput();
     if(p1Choice == 2){
         p1 = new RandomComp(b, '1', 1);
     }else if(p1Choice == 3){
