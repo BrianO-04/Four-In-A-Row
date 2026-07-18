@@ -5,20 +5,7 @@
 #include "../include/controller.hpp"
 
 int main(){
-    std::cout << "Input board width: ";
-    int w = getNumberInput();
-    std::cout << "Input board height: ";
-    int h = getNumberInput();
-
-    while(w < 4 && h < 4){
-        std::cout << "Board must be at least four in one dimension!" << std::endl;
-        std::cout << "Input board width: ";
-        w = getNumberInput();
-        std::cout << "Input board height: ";
-        h = getNumberInput();
-    }
-
-    Board* b = new Board(w,h);
+    Board* b = new Board(7,6);
 
     Controller* p1;
     Controller* p2;
