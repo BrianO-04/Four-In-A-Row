@@ -7,6 +7,8 @@ The purpose of this branch is data collection, and neural network training/integ
 
 CMake must be installed
 
+The Eigen library for C++ must be installed
+
 # Build instructions
 ## How to compile 
 	$ git clone git@github.com:BrianO-04/Four-In-A-Row.git

@@ -15,3 +15,6 @@ add_executable(FourInARow
 add_executable(dataTester
     src/gamedata.cpp
     src/dataTester.cpp)
+
+find_package(Eigen3 REQUIRED)
+target_link_libraries(FourInARow PRIVATE Eigen3::Eigen)
