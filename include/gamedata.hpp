@@ -12,6 +12,8 @@ public:
     void printMoves();
     int saveData();
     int loadData(const std::string& fileName);
+    int getTotalMoves();
+    int getWinnerNumber();
 };
 
 #endif // DATA_H_
