@@ -6,11 +6,14 @@ include_directories(include)
 include_directories(src)
 
 add_executable(FourInARow 
+    src/main.cpp
     src/gamedata.cpp
     src/controller.cpp
     src/input.cpp
     src/board.cpp
-    src/main.cpp)
+    src/layer.cpp
+    src/network.cpp
+    src/funcs.cpp)
 
 add_executable(dataTester
     src/gamedata.cpp
