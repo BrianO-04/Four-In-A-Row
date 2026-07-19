@@ -1,7 +1,7 @@
 # Four In A Row
 Four In A Row game written in C++
 
-The purpose of this branch is data collection.
+The purpose of this branch is data collection, and neural network training/integration.
 
 ## Prerequisites for compilation
 
