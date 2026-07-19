@@ -1,3 +1,5 @@
+#include <iostream>
+#include <ostream>
 #include <vector>
 #include "funcs.hpp"
 #include "network.hpp"
@@ -21,6 +23,8 @@ int main(){
     }
 
     for(int i = 0; i < dataFiles.size(); i++){
+        std::cout << "Total Moves: " << dataFiles[i].getTotalMoves() << std::endl;
+        std::cout << "Winner: Player " << dataFiles[i].getWinnerNumber() << std::endl;
         dataFiles[i].printMoves();
     }
 

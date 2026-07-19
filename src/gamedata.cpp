@@ -56,8 +56,16 @@ void Data::printMoves(){
 int Data::getTotalMoves(){
     int total = 0;
     for(int i = 0; i < BOARD_SIZE; i++){
-        if(moves[i] == 0) break;
+        if(moves[i] == -1) break;
         total++;
     }
     return total;
+}
+
+int Data::getWinnerNumber(){
+    if(getTotalMoves() % 2 == 0){
+        return 2;
+    }else{
+        return 1;
+    }
 }
