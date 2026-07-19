@@ -3,9 +3,11 @@
 
 #include <string>
 
+#define BOARD_SIZE 7*6
+
 class Data{
 private:
-    int moves[7*6] = {0};
+    int moves[BOARD_SIZE] = {-1};
     int moveNum = 0;
 public:
     void addMove(int move);
