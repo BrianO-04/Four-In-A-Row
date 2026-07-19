@@ -2,8 +2,8 @@
 #include "funcs.hpp"
 #include <iostream>
 
-NeuralNetwork::NeuralNetwork(std::vector<Layer> l){
-    layers = l;
+NeuralNetwork::NeuralNetwork(std::vector<Layer> _layers){
+    layers = _layers;
 }
 
 Eigen::VectorXd NeuralNetwork::getOutput(){
@@ -17,7 +17,7 @@ void NeuralNetwork::forwardPass(Eigen::VectorXd& input){
     }
 }
 
-void NeuralNetwork::backPass(Eigen::VectorXd& input, Eigen::VectorXd& probabilities, Eigen::VectorXd& target, double learning_rate){
+void NeuralNetwork::backPass(Eigen::VectorXd& input, Eigen::VectorXd& probabilities, Eigen::VectorXd& target, double learningRate){
     Eigen::VectorXd out_delta = probabilities - target;
     layers.back().setDelta(out_delta);
 
@@ -39,11 +39,11 @@ void NeuralNetwork::backPass(Eigen::VectorXd& input, Eigen::VectorXd& probabilit
         }else{
             in = layers[i-1].getActiveNeurons();
         }
-        layers[i].updateWeights(in, learning_rate);
+        layers[i].updateWeights(in, learningRate);
     }
 }
 
-void NeuralNetwork::train(const std::vector<Eigen::VectorXd> &inputs, const std::vector<Eigen::VectorXd> &targets, double learning_rate, int epochs){
+void NeuralNetwork::train(const std::vector<Eigen::VectorXd> &inputs, const std::vector<Eigen::VectorXd> &targets, double learningRate, int epochs){
     for(int epoch = 0; epoch < epochs; epoch++){
         double epochLoss = 0.0;
 
@@ -57,7 +57,7 @@ void NeuralNetwork::train(const std::vector<Eigen::VectorXd> &inputs, const std:
             double loss = CrossEntropy(probs, target);
             epochLoss += loss;
 
-            backPass(input, probs, target, learning_rate);
+            backPass(input, probs, target, learningRate);
         }
         epochLoss /= inputs.size();
 
