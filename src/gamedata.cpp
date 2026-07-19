@@ -3,6 +3,10 @@
 #include <iostream>
 #include <fstream>
 
+Data::Data(){
+    std::fill(moves, moves+BOARD_SIZE, -1);
+}
+
 int Data::saveData(){
     auto now = std::chrono::floor<std::chrono::seconds>(std::chrono::system_clock::now());
     std::string fileName = std::format("data/{:%H-%M-%S}.bin", now);
@@ -21,7 +25,7 @@ int Data::saveData(){
 }
 
 void Data::addMove(int move){
-    if(moveNum < 7*6) moves[moveNum++] = move;
+    if(moveNum < BOARD_SIZE) moves[moveNum++] = move;
 }
 
 int Data::loadData(const std::string &fileName){
@@ -43,8 +47,17 @@ int Data::loadData(const std::string &fileName){
 }
 
 void Data::printMoves(){
-    for(int i = 0; i < 7*6; i++){
+    for(int i = 0; i < BOARD_SIZE; i++){
         std::cout << moves[i];
     }
     std::cout << std::endl;
+}
+
+int Data::getTotalMoves(){
+    int total = 0;
+    for(int i = 0; i < BOARD_SIZE; i++){
+        if(moves[i] == 0) break;
+        total++;
+    }
+    return total;
 }
