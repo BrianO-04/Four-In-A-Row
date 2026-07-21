@@ -25,6 +25,10 @@ Eigen::VectorXd Layer::getDelta(){
     return delta;
 }
 
+Eigen::VectorXd Layer::getBiases(){
+    return biases;
+}
+
 Eigen::MatrixXd Layer::getWeights(){
     return weights;
 }
@@ -36,4 +40,12 @@ void Layer::updateWeights(const Eigen::VectorXd &input, double learning_rate){
 
 Eigen::VectorXd Layer::getActiveDerivative(){
     return Activation_derivative(neuronVals);
+}
+
+void Layer::setWeights(Eigen::MatrixXd w, Eigen::VectorXd b, Eigen::Index rows, Eigen::Index cols, Eigen::Index bSize){
+    weights.resize(rows, cols);
+    weights = w;
+
+    biases.resize(bSize);
+    biases = b;
 }

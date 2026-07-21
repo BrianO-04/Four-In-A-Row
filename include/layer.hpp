@@ -1,6 +1,7 @@
 #ifndef LAYER_H_
 #define LAYER_H_
 
+#include <Eigen/Core>
 #include <Eigen/Dense>
 
 class Layer{
@@ -16,7 +17,9 @@ public:
     Eigen::VectorXd getActiveNeurons();
     Eigen::VectorXd getActiveDerivative();
     Eigen::VectorXd getDelta();
+    Eigen::VectorXd getBiases();
     Eigen::MatrixXd getWeights();
+    void setWeights(Eigen::MatrixXd w, Eigen::VectorXd b, Eigen::Index rows, Eigen::Index cols, Eigen::Index bSize);
 };
 
 #endif // LAYER_H_
