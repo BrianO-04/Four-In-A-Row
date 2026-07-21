@@ -1,3 +1,6 @@
+#include <Eigen/Core>
+#include <Eigen/src/Core/Matrix.h>
+#include <asm-generic/errno.h>
 #include <iostream>
 #include <ostream>
 #include <vector>
@@ -5,6 +8,69 @@
 #include "network.hpp"
 #include "gamedata.hpp"
 #include <filesystem>
+
+void player1Data(std::vector<Eigen::VectorXd>* inputData, std::vector<Eigen::VectorXd>* targets, std::vector<Data> dataFiles, int i){
+    // Set initial board state for first move
+    Eigen::VectorXd boardState(BOARD_SIZE);
+    boardState.setConstant(-1);
+
+    Eigen::VectorXd targetMove(7);
+    targetMove.setZero();
+    targetMove[dataFiles[i].moves[0]] = 1.0;
+
+    inputData->push_back(boardState);
+    targets->push_back(targetMove);
+
+    for(int j = 2; j < dataFiles[i].getTotalMoves(); j += 2){
+        Eigen::VectorXd board(BOARD_SIZE);
+        board.setConstant(-1);
+        for(int k = 0; k < j; k++){ // Copy moves up to point into vector
+            board[k] = dataFiles[i].moves[k];
+            std::cout << "Phase " << j << " move " << dataFiles[i].moves[k] << std::endl;
+        }
+
+        Eigen::VectorXd target(7);
+        target.setZero();
+        target[dataFiles[i].moves[j]] = 1.0;
+
+        std::cout << "Phase " << j << " target: " << dataFiles[i].moves[j] << std::endl;
+
+        inputData->push_back(board);
+        targets->push_back(target);
+    }
+}
+
+void player2Data(std::vector<Eigen::VectorXd>* inputData, std::vector<Eigen::VectorXd>* targets, std::vector<Data> dataFiles, int i){
+    // Set initial board state for first move
+    Eigen::VectorXd boardState(BOARD_SIZE);
+    boardState.setConstant(-1);
+    boardState[0] = dataFiles[i].moves[0];
+
+    Eigen::VectorXd targetMove(7);
+    targetMove.setZero();
+    targetMove[dataFiles[i].moves[1]] = 1.0;
+
+    inputData->push_back(boardState);
+    targets->push_back(targetMove);
+
+    for(int j = 3; j < dataFiles[i].getTotalMoves(); j += 2){
+        Eigen::VectorXd board(BOARD_SIZE);
+        board.setConstant(-1);
+        for(int k = 0; k < j; k++){ // Copy moves up to point into vector
+            board[k] = dataFiles[i].moves[k];
+            std::cout << "Phase " << j << " move " << dataFiles[i].moves[k] << std::endl;
+        }
+
+        Eigen::VectorXd target(7);
+        target.setZero();
+        target[dataFiles[i].moves[j]] = 1.0;
+
+        std::cout << "Phase " << j << " target: " << dataFiles[i].moves[j] << std::endl;
+
+        inputData->push_back(board);
+        targets->push_back(target);
+    }
+}
 
 int main(){
     
@@ -22,11 +88,30 @@ int main(){
         }
     }
 
+    Layer hidden_layer(BOARD_SIZE, 64, ReLU, ReLU_Derivative);
+    Layer output_layer(64, 7, Identity, Identity_Derivative);
+
+    std::vector<Eigen::VectorXd> inputData;
+    std::vector<Eigen::VectorXd> targets;
+
     for(int i = 0; i < dataFiles.size(); i++){
         std::cout << "Total Moves: " << dataFiles[i].getTotalMoves() << std::endl;
         std::cout << "Winner: Player " << dataFiles[i].getWinnerNumber() << std::endl;
         dataFiles[i].printMoves();
+
+        if(dataFiles[i].getWinnerNumber() == 1){
+            player1Data(&inputData, &targets, dataFiles, i);
+        }else{
+            player2Data(&inputData, &targets, dataFiles, i);
+        }
+
     }
+    NeuralNetwork nn({hidden_layer, output_layer});
+
+    nn.train(inputData, targets, 0.00067, 6967);
+
+    nn.exportWeights();
 
     return 0;
 }
+
