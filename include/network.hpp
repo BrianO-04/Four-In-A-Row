@@ -15,6 +15,8 @@ public:
     void backPass(Eigen::VectorXd& input, Eigen::VectorXd& probabilities, Eigen::VectorXd& target, double learningRate);
     void train(const std::vector<Eigen::VectorXd>& inputs, const std::vector<Eigen::VectorXd>& targets, double learningRate, int epochs);
     void test(const std::vector<Eigen::VectorXd>& inputs, const std::vector<Eigen::VectorXd>& targets);
+    int exportWeights();
+    int loadWeights(std::string filename);
 };
 
 #endif

@@ -1,6 +1,10 @@
 #include "network.hpp"
 #include "funcs.hpp"
+#include <Eigen/Core>
+#include <Eigen/Dense>
 #include <iostream>
+#include <fstream>
+#include <chrono>
 
 NeuralNetwork::NeuralNetwork(std::vector<Layer> _layers){
     layers = _layers;
@@ -88,4 +92,112 @@ void NeuralNetwork::test(const std::vector<Eigen::VectorXd> &inputs, const std::
 
         double accuracy = static_cast<double>(correct_predictions) / inputs.size();
         std::cout << "Test Accuracy: " << accuracy << std::endl;
+}
+
+int NeuralNetwork::exportWeights(){
+    auto now = std::chrono::floor<std::chrono::seconds>(std::chrono::system_clock::now());
+    std::string fileName = std::format("weights/Weights{:%H%M%S}.bin", now);
+
+    std::ofstream outFile(fileName, std::ios::out | std::ios::binary);
+
+    if (!outFile) {
+        std::cerr << "Error creating data file!" << std::endl;
+        return 1;
+    }
+
+    // Layer Count Header
+    int layerCount = layers.size();
+    outFile.write(reinterpret_cast<const char*>(&layerCount), sizeof(layerCount));
+
+    // Layer saving
+    for(int i = 0; i < layers.size(); i++){
+        const std::int64_t rows = layers[i].getWeights().rows();
+        const std::int64_t cols = layers[i].getWeights().cols();
+        Eigen::MatrixXd weights = layers[i].getWeights();
+        outFile.write(reinterpret_cast<const char*>(&rows), sizeof(rows));
+        outFile.write(reinterpret_cast<const char*>(&cols), sizeof(cols));
+
+        outFile.write(
+            reinterpret_cast<const char*>(layers[i].getWeights().data()),
+            static_cast<std::streamsize>(
+                layers[i].getWeights().size() * sizeof(Eigen::MatrixXd::Scalar)
+            )
+        );
+
+        const auto& biases = layers[i].getBiases();
+        std::int64_t biasSize = biases.size();
+
+        outFile.write(
+            reinterpret_cast<const char*>(&biasSize),
+            sizeof(biasSize)
+        );
+
+        outFile.write(
+            reinterpret_cast<const char*>(biases.data()),
+            biasSize * sizeof(Eigen::VectorXd::Scalar)
+        );
+
+        if(!outFile){
+            std::cerr << "Error while writing matrix data.\n";
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int NeuralNetwork::loadWeights(std::string filename){
+    std::ifstream inFile(filename, std::ios::in | std::ios::binary);
+
+    if (!inFile) {
+        std::cerr << "Error loading data file!" << std::endl;
+        return 1;
+    }
+
+    // Layer Count Header
+    int layerCount = 0;
+    inFile.read(reinterpret_cast<char*>(&layerCount), sizeof(layerCount));
+
+    // Layer loading
+    for(int i = 0; i < layers.size(); i++){
+        std::int64_t rows = 0;
+        std::int64_t cols = 0;
+        
+        inFile.read(reinterpret_cast<char*>(&rows), sizeof(rows));
+        inFile.read(reinterpret_cast<char*>(&cols), sizeof(cols));
+
+        if(!inFile){
+            std::cerr << "Could not read matrix dimensions.\n";
+            return false;
+        }
+
+        Eigen::MatrixXd matrix;
+        matrix.resize(rows, cols);
+
+        inFile.read(
+            reinterpret_cast<char*>(matrix.data()),
+            static_cast<std::streamsize>(
+                matrix.size() * sizeof(Eigen::MatrixXd::Scalar)
+            )
+        );
+
+        Eigen::VectorXd biases(1);
+        std::int64_t biasSize = 0;
+
+        inFile.read(
+            reinterpret_cast<char*>(&biasSize),
+            sizeof(biasSize)
+        );
+
+        biases.resize(biasSize);
+
+        inFile.read(
+            reinterpret_cast<char*>(biases.data()),
+            biasSize * sizeof(Eigen::VectorXd::Scalar)
+        );
+
+        layers[i].setWeights(matrix, biases, rows, cols, biasSize);
+    }
+
+    return 0;
 }
