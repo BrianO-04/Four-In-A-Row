@@ -1,9 +1,11 @@
 #include "../include/controller.hpp"
 #include "../include/input.hpp"
 #include "board.hpp"
+#include "network.hpp"
 #include <asm-generic/errno.h>
 #include <iostream>
 #include <string>
+#include "funcs.hpp"
 
 Controller::Controller(Board* b, char p, int n){
     board = b;
@@ -112,4 +114,35 @@ bool SimpleComp::Move(Data* data){
         data->addMove(col);
         return board->check(row, col);
     }
+}
+
+NNAI::NNAI(Board* b, char p, int n, std::string weightFile) : Controller(b, p, n){
+    Layer hidden_layer(BOARD_SIZE, 64, ReLU, ReLU_Derivative);
+    Layer output_layer(64, 7, Identity, Identity_Derivative);
+    nn = new NeuralNetwork({hidden_layer, output_layer});
+
+    nn->loadWeights(weightFile);
+}
+
+bool NNAI::Move(Data* data){
+    Eigen::VectorXd moves(BOARD_SIZE);
+    moves.setConstant(-1);
+    for(int k = 0; k < BOARD_SIZE; k++){ // Copy moves up to point into vector
+        moves[k] = data->moves[k];
+    }
+    nn->forwardPass(moves);
+
+    Eigen::VectorXd output = nn->getOutput();
+
+    int predicted_index;
+    output.maxCoeff(&predicted_index);
+
+    int row = board->put(piece, predicted_index);
+    while(row == -1){ // Invalid input loop
+        predicted_index += 1;
+        predicted_index %= board->getWidth();
+        row = board->put(piece, predicted_index);
+    }
+    data->addMove(predicted_index);
+    return board->check(row, predicted_index);
 }

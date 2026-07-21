@@ -4,6 +4,7 @@
 #include "board.hpp"
 #include <random>
 #include "gamedata.hpp"
+#include "network.hpp"
 
 class Controller{
     protected:
@@ -37,6 +38,14 @@ class SimpleComp : public Controller{
         std::uniform_int_distribution<int> distrib;
     public:
         SimpleComp(Board* b, char p, int n);
+        bool Move(Data* data);
+};
+
+class NNAI : public Controller{
+    private:
+        NeuralNetwork* nn;
+    public:
+        NNAI(Board* b, char p, int n, std::string weightFile);
         bool Move(Data* data);
 };
 
