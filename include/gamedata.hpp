@@ -7,9 +7,9 @@
 
 class Data{
 private:
-    int moves[BOARD_SIZE];
     int moveNum = 0;
 public:
+    int moves[BOARD_SIZE];
     Data();
     void addMove(int move);
     void printMoves();
