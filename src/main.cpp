@@ -16,12 +16,15 @@ int main(){
     std::cout << "1) Player controlled (Default)" << std::endl;
     std::cout << "2) Random columns" << std::endl;
     std::cout << "3) Simple AI (Recommended)" << std::endl;
+    std::cout << "4) NN AI" << std::endl;
     std::cout << "Input: ";
     int pChoice = getNumberInput();
     if(pChoice == 2){
         p2 = new RandomComp(b, '2', 2);
     }else if(pChoice == 3){
         p2 = new SimpleComp(b, '2', 2);
+    }else if(pChoice == 4){
+        p2 = new NNAI(b, '2', 2, "weights/Weights022002.bin");
     }
     else{
         p2 = new Player(b, '2', 2);
