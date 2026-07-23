@@ -1,11 +1,12 @@
 # Four In A Row
-Four In A Row game written in C++
+Four In A Row game written in C++ with multiple opponent options
 
-The purpose of this branch is data collection, and neural network training/integration.
+Includes a neural network written from scratch in C++ with Eigen for efficient linear algebra calculations.
+
 
 ## Prerequisites for compilation
 
-CMake must be installed
+CMake and a C++ compiler must be installed
 
 The Eigen library for C++ must be installed
 
