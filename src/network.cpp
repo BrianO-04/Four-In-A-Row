@@ -4,7 +4,6 @@
 #include <Eigen/Dense>
 #include <iostream>
 #include <fstream>
-#include <chrono>
 
 NeuralNetwork::NeuralNetwork(std::vector<Layer> _layers){
     layers = _layers;
