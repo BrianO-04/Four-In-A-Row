@@ -19,3 +19,22 @@ The Eigen library for C++ must be installed
 ## How to run
     $ cd build
 	$ ./FourInARow
+## How to train the neural network
+
+Before collecting data, you must create a "data" folder and a "weights" folder at the root of the repository.
+
+After you have created those folders, play Four In A Row by running the FourInARow application:
+
+	$ cd Four-In-A-Row/build
+	$ ./FourInARow
+
+When a human controlled player wins a game of Four In A Row, a binary file containing each move made in that game will be saved to the "data" folder.
+
+Once a sufficient amount of data is collected, you can train the neural network on the data by running the training application:
+
+	$ cd Four-In-A-Row/build
+	$ ./NetworkTrainer
+
+After the neural network has finished training, the weights will be saved as "Weights.bin" to the "weights" folder.
+
+To play against the trained neural network, select the "NN AI" option when starting the Four In A Row application.
