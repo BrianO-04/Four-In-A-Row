@@ -98,10 +98,6 @@ int main(){
     std::vector<Eigen::VectorXd> targets;
 
     for(int i = 0; i < dataFiles.size(); i++){
-        std::cout << "Total Moves: " << dataFiles[i].getTotalMoves() << std::endl;
-        std::cout << "Winner: Player " << dataFiles[i].getWinnerNumber() << std::endl;
-        dataFiles[i].printMoves();
-
         if(dataFiles[i].getWinnerNumber() == 1){
             player1Data(&inputData, &targets, dataFiles, i);
         }else{
