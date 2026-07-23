@@ -88,10 +88,9 @@ int main(){
         }
     }
 
-    Layer hidden_layer(BOARD_SIZE, 512, ReLU, ReLU_Derivative);
-    Layer hidden_layer2(512, 256, ReLU, ReLU_Derivative);
-    Layer hidden_layer3(256, 128, ReLU, ReLU_Derivative);
-    Layer hidden_layer4(128, 64, ReLU, ReLU_Derivative);
+    Layer hidden_layer(BOARD_SIZE, 128, ReLU, ReLU_Derivative);
+    Layer hidden_layer2(128, 64, ReLU, ReLU_Derivative);
+    Layer hidden_layer3(64, 64, ReLU, ReLU_Derivative);
     Layer output_layer(64, 7, Identity, Identity_Derivative);
 
     std::vector<Eigen::VectorXd> inputData;
@@ -105,7 +104,7 @@ int main(){
         }
 
     }
-    NeuralNetwork nn({hidden_layer, hidden_layer2, hidden_layer3, hidden_layer4, output_layer});
+    NeuralNetwork nn({hidden_layer, hidden_layer2, hidden_layer3, output_layer});
 
     nn.loadWeights("weights/Weights.bin");
     nn.train(inputData, targets, 0.001, 100);
