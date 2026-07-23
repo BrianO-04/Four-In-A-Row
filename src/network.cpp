@@ -95,8 +95,7 @@ void NeuralNetwork::test(const std::vector<Eigen::VectorXd> &inputs, const std::
 }
 
 int NeuralNetwork::exportWeights(){
-    auto now = std::chrono::floor<std::chrono::seconds>(std::chrono::system_clock::now());
-    std::string fileName = std::format("weights/Weights{:%H%M%S}.bin", now);
+    std::string fileName = "weights/Weights.bin";
 
     std::ofstream outFile(fileName, std::ios::out | std::ios::binary);
 
