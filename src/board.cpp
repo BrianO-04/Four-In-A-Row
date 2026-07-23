@@ -310,7 +310,7 @@ void Board::reset(){
 
 void Board::printBoard(){
     for(int i = 0; i < w; i++){
-        std::cout << i;
+        std::cout << i << " ";
     }
     std::cout << std::endl;
     for(int i = 0; i < w * h; i++){
@@ -321,6 +321,7 @@ void Board::printBoard(){
         else{
             std::cout << positions[i];
         }
+        std::cout << " ";
     }
     std::cout << std::endl << std::endl;
 }
