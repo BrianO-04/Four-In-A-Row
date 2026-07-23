@@ -15,9 +15,9 @@ add_executable(FourInARow
     src/network.cpp
     src/funcs.cpp)
 
-add_executable(dataTester
+add_executable(dataTool
     src/gamedata.cpp
-    src/dataTester.cpp)
+    src/dataTool.cpp)
 
 add_executable(NetworkTrainer
     src/trainer.cpp
