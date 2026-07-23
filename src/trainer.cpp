@@ -1,8 +1,6 @@
 #include <Eigen/Core>
 #include <Eigen/src/Core/Matrix.h>
 #include <asm-generic/errno.h>
-#include <iostream>
-#include <ostream>
 #include <vector>
 #include "funcs.hpp"
 #include "network.hpp"
@@ -26,14 +24,11 @@ void player1Data(std::vector<Eigen::VectorXd>* inputData, std::vector<Eigen::Vec
         board.setConstant(-1);
         for(int k = 0; k < j; k++){ // Copy moves up to point into vector
             board[k] = dataFiles[i].moves[k];
-            std::cout << "Phase " << j << " move " << dataFiles[i].moves[k] << std::endl;
         }
 
         Eigen::VectorXd target(7);
         target.setZero();
         target[dataFiles[i].moves[j]] = 1.0;
-
-        std::cout << "Phase " << j << " target: " << dataFiles[i].moves[j] << std::endl;
 
         inputData->push_back(board);
         targets->push_back(target);
@@ -58,14 +53,11 @@ void player2Data(std::vector<Eigen::VectorXd>* inputData, std::vector<Eigen::Vec
         board.setConstant(-1);
         for(int k = 0; k < j; k++){ // Copy moves up to point into vector
             board[k] = dataFiles[i].moves[k];
-            std::cout << "Phase " << j << " move " << dataFiles[i].moves[k] << std::endl;
         }
 
         Eigen::VectorXd target(7);
         target.setZero();
         target[dataFiles[i].moves[j]] = 1.0;
-
-        std::cout << "Phase " << j << " target: " << dataFiles[i].moves[j] << std::endl;
 
         inputData->push_back(board);
         targets->push_back(target);
