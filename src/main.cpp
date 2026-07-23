@@ -24,7 +24,7 @@ int main(){
     }else if(pChoice == 3){
         p2 = new SimpleComp(b, '2', 2);
     }else if(pChoice == 4){
-        p2 = new NNAI(b, '2', 2, "weights/Weights022002.bin");
+        p2 = new NNAI(b, '2', 2, "weights/Weights.bin");
     }
     else{
         p2 = new Player(b, '2', 2);
