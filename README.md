@@ -23,7 +23,7 @@ The Eigen library for C++ must be installed
 
 Before collecting data, you must create a "data" folder and a "weights" folder at the root of the repository.
 
-After you have created those folders, play Four In A Row by running the FourInARow application:
+After you have created those folders, play Four In A Row by running the Four In A Row application:
 
 	$ cd Four-In-A-Row/build
 	$ ./FourInARow
